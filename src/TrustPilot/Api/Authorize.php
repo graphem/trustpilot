@@ -26,6 +26,11 @@ class Authorize extends AbstractApi{
     protected $token;
 
     /**
+     * @var String
+     */
+    protected $type_settings;
+
+    /**
      * Set the token
      *
      * @param  string
@@ -48,25 +53,63 @@ class Authorize extends AbstractApi{
     }
 
     /**
-     * Get Authorization Token
+     * Get Authorization Token with password method
      *
      * @param  
      * @return 
      */
-    public function createToken($type, $username = '', $password = '')
+    public function createPasswordToken($username = '', $password = '')
+    {        
+       $data = array('username' => $username, 'password' => $password);
+       $this->token = $this->createToken('password', $data);
+       var_dump($this->token);
+    }
+
+    /**
+     * Redirect to get Authorization Code
+     *
+     * @param  
+     * @return 
+     */
+    public function redirectToAuth($apiKey, $redirect_uri = '')
+    {        
+       $data = array('code' => $code, 'redirect_uri' => $redirect_uri);
+       header('Location: https://authenticate.trustpilot.com?client_id='.$apiKey.'&redirect_uri='.urlencode($redirect_uri).'&response_type=code');
+       exit;
+    }
+
+    /**
+     * Get Authorization Token with Authrorization Code
+     *
+     * @param  
+     * @return 
+     */
+    public function createAuthToken($code = '', $redirect_uri = '')
+    {        
+       $data = array('code' => $code, 'redirect_uri' => $redirect_uri);
+       $this->token = $this->createToken('authorization_code', $data);
+       var_dump($this->token);
+    }
+
+    /**
+     * Get Authorization Token with authorization code
+     *
+     * @param  
+     * @return 
+     */
+    protected function createToken($type,$data)
     {
-        $response = json_decode($this->api->post(
+        $body = array(
+                    'grant_type' => $type
+                );
+        $fullBody = array_merge($body, $data);
+
+        return $response = json_decode($this->api->post(
             'oauth/oauth-business-users-for-applications/accesstoken',
             array(
-                'form_params' => array(
-                    'grant_type' => $type,
-                    'username' => $username,
-                    'password' => $password
-                )
+                'form_params' => $fullBody
             )
         ));
-
-       $this->token = $response;
     }
 
     /**
