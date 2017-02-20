@@ -1,0 +1,21 @@
+{
+    "name": "graphem/trustpilot",
+    "description": "Simple PHP library for TrustPilot API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Guillaume Bourdages",
+            "email": "gbourdages@graphem.ca"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.1",
+        "nesbot/carbon": "^1.22"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+    "autoload": {
+        "psr-4": {"TrustPilot\\": "src/TrustPilot"}
+    }
+}
