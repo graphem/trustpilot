@@ -3,7 +3,7 @@
 /*
  * This file is part of the TrustPilot library.
  *
- * (c) Guillaume Bourdages <info@graphem.ca>
+ * (c) Graphem Solutions <info@graphem.ca>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,7 +11,7 @@
 namespace TrustPilot\Helper;
 
 /**
- * @author Guillaume Bourdages <info@graphem.ca>
+ * @author Graphem Solutions <info@graphem.ca>
  */
 
 /**
