@@ -62,7 +62,7 @@ class Authorize extends AbstractApi{
     {        
        $data = array('username' => $username, 'password' => $password);
        $this->token = $this->createToken('password', $data);
-       var_dump($this->token);
+       return $this->token;
     }
 
     /**
@@ -88,7 +88,7 @@ class Authorize extends AbstractApi{
     {        
        $data = array('code' => $code, 'redirect_uri' => $redirect_uri);
        $this->token = $this->createToken('authorization_code', $data);
-       var_dump($this->token);
+       return $this->token;
     }
 
     /**
@@ -131,6 +131,7 @@ class Authorize extends AbstractApi{
         ));
 
        $this->token = $response;
+
     }
 
     /**
@@ -139,11 +140,14 @@ class Authorize extends AbstractApi{
      * @param  
      * @return 
      */
-    public function validateToken()
+    public function isRefreshedToken()
     {
+        
         if(!$this->isValidToken()){
             $this->refreshToken();
+            return true;
         }
+        return false;
     }
 
     /**
