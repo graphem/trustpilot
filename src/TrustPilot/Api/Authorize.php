@@ -131,6 +131,7 @@ class Authorize extends AbstractApi{
         ));
 
        $this->token = $response;
+       return $response;
 
     }
 
@@ -161,13 +162,12 @@ class Authorize extends AbstractApi{
         if(!isset($this->token)){
             return false;
         }
-
         $issued_at = intval(substr($this->token->issued_at, 0, -3));
         $expires_in = intval($this->token->expires_in);
         $expiry = $issued_at + $expires_in;
 
         $now = Carbon::now()->timestamp;
-
+        
         if($now > ($expiry - 3600)){
             return false;
         }

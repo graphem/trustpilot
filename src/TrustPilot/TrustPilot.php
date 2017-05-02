@@ -79,9 +79,6 @@ class TrustPilot
         $this->token = $token;
         $auth = $this->authorize();
         $auth->setToken($this->token);
-        if($auth->isRefreshedToken()){
-            $this->token = $auth->getToken();
-        }
     }
 
     /**
