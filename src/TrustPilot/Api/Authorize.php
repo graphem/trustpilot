@@ -168,7 +168,7 @@ class Authorize extends AbstractApi{
 
         $now = Carbon::now()->timestamp;
         
-        if($now > ($expiry - 3600)){
+        if($now > ($expiry - 7200)){
             return false;
         }
 
