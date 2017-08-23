@@ -30,7 +30,7 @@ class Invitation extends AbstractApi{
      */
     public function createInvitation($businessUnitId, $data)
     {
-        $data['locale'] = isset($data['local']) ?: 'en-US' ;
+        $data['locale'] = isset($data['locale']) ? $data['locale'] : 'en-US';
         $data['preferredSendTime'] = isset($data['preferredSendTime']) ? Carbon::parse($data['preferredSendTime'])->toAtomString() : '' ;
 
         return json_decode(
