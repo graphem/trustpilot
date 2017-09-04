@@ -86,7 +86,7 @@ class Invitation extends AbstractApi{
      */
     public function generateInvitationLink($businessUnitId, $data)
     {
-        $data['locale'] = isset($data['local']) ?: 'en-US' ;
+        $data['locale'] = isset($data['locale']) ? $data['locale'] : 'en-US';
         $response = json_decode(
             $this->api->post('private/business-units/'. $businessUnitId .'/invitation-links', array('json' => $data)));
         return $response->url;
