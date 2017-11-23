@@ -193,5 +193,16 @@ class BusinessUnit extends AbstractApi{
         return json_decode(
             $this->api->get('business-units/' . $businessUnitId . '/tags'));
     }
-   
+
+    /**
+     * Get a business unit's images
+     *
+     * @param string
+     * @return array
+     */
+    public function getImages($businessUnitId)
+    {
+        return json_decode($this->api->get('business-units/' . $businessUnitId . '/images'));
+    }
+
 }
