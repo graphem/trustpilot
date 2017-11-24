@@ -27,7 +27,6 @@ use TrustPilot\Api\ServicesReviews;
 
 class TrustPilot
 {
-    
     /**
      * @var string
      */
@@ -59,10 +58,12 @@ class TrustPilot
 
 
     /**
-     * @param AdapterInterface $adapter
+     * @param $apiKey
+     * @param $secret
+     * @param string $endpoint
      */
     public function __construct($apiKey, $secret, $endpoint = null)
-    {          
+    {
         $this->apiKey = $apiKey;
         $this->secret = $secret;
         $this->endpoint = $endpoint ?: static::ENDPOINT;
@@ -71,8 +72,7 @@ class TrustPilot
     /**
      * Set the access token
      *
-     * @param  
-     * @return 
+     * @param string
      */
     public function setToken($token)
     {
@@ -83,9 +83,7 @@ class TrustPilot
 
     /**
      * get the access token
-     *
-     * @param  
-     * @return 
+     * @return String
      */
     public function getToken()
     {
@@ -95,8 +93,9 @@ class TrustPilot
     /**
      * Initiate the client for API transation
      *
-     * @param  
-     * @return 
+     * @param AdapterInterface $adapter
+     * @param array $headers
+     * @return $this
      */
     protected function setAdapter(AdapterInterface $adapter = null, $headers = [])
     {
@@ -105,33 +104,29 @@ class TrustPilot
             return $this;
         }
         $this->client = new $adapter($headers,$this->endpoint);
-        return $this;        
+        return $this;
     }
 
     /**
      * Set adapter to use token from Oauth
-     *
-     * @param  
-     * @return 
+     * @return void
      */
     protected function setAdapterWithToken()
     {
-        $headers = ['headers' => 
-                        ['Authorization' => 'Bearer '. $this->token->access_token]                    
+        $headers = ['headers' =>
+                        ['Authorization' => 'Bearer '. $this->token->access_token]
                    ];
         $this->setAdapter($this->adapter,$headers);
     }
 
     /**
      * Set adapter to use API key
-     *
-     * @param  
-     * @return 
+     * @return void
      */
     protected function setAdapterWithApikey()
     {
-        $headers = ['headers' => 
-                        ['apikey' => $this->apiKey]                    
+        $headers = ['headers' =>
+                        ['apikey' => $this->apiKey]
                    ];
         $this->setAdapter($this->adapter,$headers);
     }
@@ -139,8 +134,7 @@ class TrustPilot
     /**
      * Get the client
      *
-     * @param  
-     * @return 
+     * @return AdapterInterface
      */
     public function getClient()
     {
@@ -152,8 +146,8 @@ class TrustPilot
      */
     public function authorize()
     {
-        $headers = ['headers' => 
-                        ['Authorization' => base64_encode($this->apiKey . ':' . $this->secret) ]                    
+        $headers = ['headers' =>
+                        ['Authorization' => base64_encode($this->apiKey . ':' . $this->secret) ]
                    ];
         $this->setAdapter($this->adapter,$headers);
         return new Authorize($this);
